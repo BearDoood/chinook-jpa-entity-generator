@@ -1,0 +1,42 @@
+package com.gcu.chinook.generated;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+/** Generated from table artist. */
+@Entity
+@Table(name = "artist")
+class Artist {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
+    @Column(name = "artist_id", nullable = false)
+    private Integer artistId;
+
+    @Size(max = 120)
+    @Column(name = "name", length = 120)
+    private String name;
+
+    public Integer getArtistId() {
+        return artistId;
+    }
+
+    public void setArtistId(Integer artistId) {
+        this.artistId = artistId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
