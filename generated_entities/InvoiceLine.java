@@ -2,9 +2,12 @@ package com.gcu.chinook.generated;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -16,7 +19,6 @@ class InvoiceLine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "invoice_line_id", nullable = false)
     private Integer invoiceLineId;
 
@@ -29,12 +31,20 @@ class InvoiceLine {
     private Integer trackId;
 
     @NotNull
-    @Column(name = "unit_price", nullable = false)
+    @Column(name = "unit_price", nullable = false, precision = 10, scale = 2)
     private BigDecimal unitPrice;
 
     @NotNull
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "invoice_id", insertable = false, updatable = false)
+    private Invoice invoice;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "track_id", insertable = false, updatable = false)
+    private Track track;
 
     public Integer getInvoiceLineId() {
         return invoiceLineId;
@@ -74,5 +84,13 @@ class InvoiceLine {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public Track getTrack() {
+        return track;
     }
 }
