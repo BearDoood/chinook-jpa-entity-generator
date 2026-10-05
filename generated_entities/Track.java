@@ -2,9 +2,12 @@ package com.gcu.chinook.generated;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,7 +20,6 @@ class Track {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "track_id", nullable = false)
     private Integer trackId;
 
@@ -48,8 +50,20 @@ class Track {
     private Integer bytes;
 
     @NotNull
-    @Column(name = "unit_price", nullable = false)
+    @Column(name = "unit_price", nullable = false, precision = 10, scale = 2)
     private BigDecimal unitPrice;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "album_id", insertable = false, updatable = false)
+    private Album album;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "media_type_id", insertable = false, updatable = false)
+    private MediaType mediaType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id", insertable = false, updatable = false)
+    private Genre genre;
 
     public Integer getTrackId() {
         return trackId;
@@ -121,5 +135,17 @@ class Track {
 
     public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public MediaType getMediaType() {
+        return mediaType;
+    }
+
+    public Genre getGenre() {
+        return genre;
     }
 }

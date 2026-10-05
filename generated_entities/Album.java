@@ -2,9 +2,12 @@ package com.gcu.chinook.generated;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,7 +19,6 @@ class Album {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "album_id", nullable = false)
     private Integer albumId;
 
@@ -28,6 +30,10 @@ class Album {
     @NotNull
     @Column(name = "artist_id", nullable = false)
     private Integer artistId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "artist_id", insertable = false, updatable = false)
+    private Artist artist;
 
     public Integer getAlbumId() {
         return albumId;
@@ -51,5 +57,9 @@ class Album {
 
     public void setArtistId(Integer artistId) {
         this.artistId = artistId;
+    }
+
+    public Artist getArtist() {
+        return artist;
     }
 }

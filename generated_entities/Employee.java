@@ -2,9 +2,12 @@ package com.gcu.chinook.generated;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -17,7 +20,6 @@ class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "employee_id", nullable = false)
     private Integer employeeId;
 
@@ -75,6 +77,10 @@ class Employee {
     @Size(max = 60)
     @Column(name = "email", length = 60)
     private String email;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reports_to", insertable = false, updatable = false)
+    private Employee reportsToEmployee;
 
     public Integer getEmployeeId() {
         return employeeId;
@@ -194,5 +200,9 @@ class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Employee getReportsToEmployee() {
+        return reportsToEmployee;
     }
 }
